@@ -49,6 +49,12 @@ A seguir estão as rotas disponíveis na aplicação:
 -   **`GET /api/products`**: Retorna uma lista de todos os produtos.
 
 ---
+
+## WorkFlow GitFlow
+
+Escolhi o GitFlow como minha estratégia de desenvolvimento, pois ele me ajudou a manter um fluxo de trabalho mais organizado e colaborativo. Essa estrategia me pareceu a mais robusta e eficiente quando usada em um projeto grande com muitos desenvolvedores, evitando desorganização e mantendo um fluxo consistente.
+
+
 ### Desenvolvido por
 
 * [Douglas Paz](https://github.com/douglasgls)
