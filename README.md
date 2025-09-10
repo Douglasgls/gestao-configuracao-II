@@ -17,12 +17,12 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 
 1.  **Clone o repositório:**
     ```bash
-    git clone <URL_DO_SEU_REPOSITORIO>
+    git clone https://github.com/Douglasgls/gestao-configuracao-II.git
     ```
 
 2.  **Acesse a pasta do projeto:**
     ```bash
-    cd <NOME_DA_PASTA>
+    cd gestao-configuracao-II
     ```
 
 3.  **Instale as dependências:**
