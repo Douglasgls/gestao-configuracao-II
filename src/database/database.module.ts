@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         type: 'sqlite',
-        database: config.get<string>('DATABASE_NAME'),
+        database: config.get<string>('DATABASE_NAME') || ':memory:',
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: true,
       }),

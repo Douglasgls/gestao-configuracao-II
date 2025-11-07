@@ -15,6 +15,9 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+      DATABASE_NAME: ":memory:"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,8 +25,5 @@ jobs:
           node-version: 20
       - run: npm ci
       - name: Run tests with coverage
-        env:
-          NODE_ENV: test
-          DB_PATH: ":memory:"
         run: npm run test:cov -- --coverage --coverageThreshold '{"global":{"branches":70,"functions":80,"lines":90,"statements":90}}'
 
