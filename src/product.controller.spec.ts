@@ -10,7 +10,7 @@ describe('ProductController (Basic Check)', () => {
     const mockProductService = {
       getHello: () => 'Hello World',
     };
-    
+
     const app: TestingModule = await Test.createTestingModule({
       controllers: [ProductController],
       providers: [
@@ -62,7 +62,9 @@ describe('ProductController (Remove Method)', () => {
   it('deve retornar 404 se o produto não existir', async () => {
     (service.deleteProduct as jest.Mock).mockResolvedValue(false);
 
-    await expect(controller.deleteProduct(999)).rejects.toThrow(NotFoundException);
+    await expect(controller.deleteProduct(999)).rejects.toThrow(
+      NotFoundException,
+    );
     expect(service.deleteProduct).toHaveBeenCalledWith(999);
   });
 });

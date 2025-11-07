@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, HttpCode, NotFoundException, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  NotFoundException,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './product.entity';
 
@@ -13,7 +22,7 @@ export class ProductController {
 
   @Get('/')
   @HttpCode(200)
-  getProducts(): Object {
+  getProducts(): object {
     return this.productService.getProducts();
   }
 
@@ -25,15 +34,13 @@ export class ProductController {
 
   @Delete(':id')
   @HttpCode(204)
-   async deleteProduct(@Param('id') id: number): Promise<void> {
-
+  async deleteProduct(@Param('id') id: number): Promise<void> {
     const result = await this.productService.deleteProduct(Number(id));
 
     console.log('Delete result:', result);
 
-    if(!result) {
+    if (!result) {
       throw new NotFoundException('Product not found');
     }
   }
-
 }

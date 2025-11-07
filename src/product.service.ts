@@ -6,7 +6,6 @@ import { DeleteResult } from 'typeorm';
 
 @Injectable()
 export class ProductService {
-
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
@@ -22,7 +21,7 @@ export class ProductService {
 
   async deleteProduct(id: number): Promise<number> {
     const result: DeleteResult = await this.productRepository.delete(id);
-    
-    return result.affected || 0; 
+
+    return result.affected || 0;
   }
 }
