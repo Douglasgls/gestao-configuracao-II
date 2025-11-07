@@ -13,8 +13,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     DatabaseModule,
   ],
   controllers: [ProductController],
-  providers: [
-    ProductService,
-  ],
+  providers: [ProductService],
 })
 export class ProductModule {}
