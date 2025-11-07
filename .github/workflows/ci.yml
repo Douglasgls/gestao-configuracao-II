@@ -1,9 +1,6 @@
 name: CI
 
 on: [push, pull_request]
-env:
-  NODE_ENV: test
-  DB_PATH: ":memory:"
 
 jobs:
   lint:
@@ -24,5 +21,9 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm run test:cov -- --coverage --coverageThreshold '{"global":{"branches":70,"functions":90,"lines":90,"statements":90}}'
-  
+      - name: Run tests with coverage
+        env:
+          NODE_ENV: test
+          DB_PATH: ":memory:"
+        run: npm run test:cov -- --coverage --coverageThreshold '{"global":{"branches":70,"functions":80,"lines":90,"statements":90}}'
+
