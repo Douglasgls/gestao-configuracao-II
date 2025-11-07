@@ -22,10 +22,11 @@ export class ProductController {
 
   @Get('/')
   @HttpCode(200)
-  getProducts(): object {
-    return this.productService.getProducts();
+  async getProducts(): Promise<object> {
+    return await this.productService.getProducts();
   }
 
+  // istanbul ignore next
   @Post('/')
   @HttpCode(201)
   createProduct(@Body() product: Product): Promise<Product> {

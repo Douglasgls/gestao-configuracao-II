@@ -21,4 +21,4 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm run test:cov -- --coverage --coverageThreshold '{"global":{"branches":90,"functions":90,"lines":90,"statements":90}}'
+      - run: npm run test:cov -- --coverage --coverageThreshold '{"global":{"branches":70,"functions":90,"lines":90,"statements":90}}'

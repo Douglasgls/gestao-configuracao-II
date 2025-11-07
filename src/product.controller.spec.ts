@@ -2,6 +2,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { NotFoundException } from '@nestjs/common';
+import { Product } from './product.entity';
+
+const mockProduct: Product = {
+  id: 1,
+  name: 'Mock Product 1',
+  price: 100,
+  created_at: new Date(),
+  updated_at: new Date(),
+};
+const mockProductList: Product[] = [
+  mockProduct,
+  { ...mockProduct, id: 2, name: 'Mock Product 2' },
+];
 
 describe('ProductController (Basic Check)', () => {
   let productController: ProductController;
@@ -31,40 +44,86 @@ describe('ProductController (Basic Check)', () => {
   });
 });
 
-describe('ProductController (Remove Method)', () => {
+describe('ProductController', () => {
   let controller: ProductController;
-  let service: ProductService;
+
+  let getHelloMock: jest.Mock;
+  let getProductsMock: jest.Mock;
+  let createProductMock: jest.Mock;
+  let deleteProductMock: jest.Mock;
 
   beforeEach(async () => {
+    getHelloMock = jest.fn().mockReturnValue('Hello World');
+    getProductsMock = jest.fn();
+    createProductMock = jest.fn();
+    deleteProductMock = jest.fn();
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProductController],
       providers: [
         {
           provide: ProductService,
           useValue: {
-            deleteProduct: jest.fn(),
+            getHello: getHelloMock,
+            getProducts: getProductsMock,
+            createProduct: createProductMock,
+            deleteProduct: deleteProductMock,
           },
         },
       ],
     }).compile();
 
     controller = module.get<ProductController>(ProductController);
-    service = module.get<ProductService>(ProductService);
   });
 
-  it('deve remover um produto existente e retornar 204', async () => {
-    (service.deleteProduct as jest.Mock).mockResolvedValue(true);
+  describe('GET /', () => {
+    it('deve retornar a lista de todos os produtos com status 200', async () => {
+      getProductsMock.mockResolvedValue(mockProductList);
 
-    await expect(controller.deleteProduct(1)).resolves.toBeUndefined();
-    expect(service.deleteProduct).toHaveBeenCalledWith(1);
+      const result = await controller.getProducts();
+
+      expect(result).toEqual(mockProductList);
+      expect(getProductsMock).toHaveBeenCalled();
+    });
   });
 
-  it('deve retornar 404 se o produto não existir', async () => {
-    (service.deleteProduct as jest.Mock).mockResolvedValue(false);
+  describe('POST /', () => {
+    const productDto = { name: 'Novo Prod', price: 150 } as Product;
 
-    await expect(controller.deleteProduct(999)).rejects.toThrow(
-      NotFoundException,
-    );
-    expect(service.deleteProduct).toHaveBeenCalledWith(999);
+    it('deve criar um novo produto e retornar o objeto criado com status 201', async () => {
+      const createdProduct = { ...mockProduct, ...productDto };
+      createProductMock.mockResolvedValue(createdProduct);
+
+      const result = await controller.createProduct(productDto);
+
+      expect(result).toEqual(createdProduct);
+      expect(createProductMock).toHaveBeenCalledWith(productDto);
+    });
+  });
+
+  describe('GET /hello', () => {
+    it('deve retornar "Hello World"', () => {
+      const result = controller.getHello();
+
+      expect(result).toBe('Hello World');
+    });
+  });
+
+  describe('DELETE /:id', () => {
+    it('deve remover um produto existente e retornar 204 (undefined)', async () => {
+      deleteProductMock.mockResolvedValue(true);
+
+      await expect(controller.deleteProduct(1)).resolves.toBeUndefined();
+      expect(deleteProductMock).toHaveBeenCalledWith(1);
+    });
+
+    it('deve retornar 404 se o produto não existir', async () => {
+      deleteProductMock.mockResolvedValue(false);
+
+      await expect(controller.deleteProduct(999)).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(deleteProductMock).toHaveBeenCalledWith(999);
+    });
   });
 });
