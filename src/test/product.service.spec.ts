@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ProductService } from './product.service';
+import { ProductService } from '../product.service';
 import { Repository } from 'typeorm';
-import { Product } from './product.entity';
+import { Product } from '../product.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { DeleteResult } from 'typeorm';
 

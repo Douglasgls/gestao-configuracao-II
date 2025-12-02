@@ -46,6 +46,7 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 
 A seguir estão as rotas disponíveis na aplicação:
 
+-   **`GET /api/products/hello`**: Retorna uma mensagem de saudação.
 -   **`GET /api/products`**: Retorna uma lista de todos os produtos.
 -   **`POST /api/products`**: Cria um novo produto.
     body:{
