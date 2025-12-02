@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { ProductModule } from './product.module';
+import { ProductModule } from '../product.module';
 
 describe('Main bootstrap', () => {
   it('deve inicializar o aplicativo sem erros', async () => {

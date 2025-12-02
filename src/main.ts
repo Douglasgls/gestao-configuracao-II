@@ -1,4 +1,4 @@
-/* istanbul ignore file */
+import './polyfills'
 import { NestFactory } from '@nestjs/core';
 import { ProductModule } from './product.module';
 

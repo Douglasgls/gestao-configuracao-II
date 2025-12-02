@@ -1,4 +1,4 @@
-import { Product } from './product.entity';
+import { Product } from '../product.entity';
 
 describe('Product Entity', () => {
   it('should create a new instance of Product and assign properties', () => {
