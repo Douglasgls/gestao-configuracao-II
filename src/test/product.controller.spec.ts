@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ProductController } from './product.controller';
-import { ProductService } from './product.service';
+import { ProductController } from '../product.controller';
+import { ProductService } from '../product.service';
 import { NotFoundException } from '@nestjs/common';
-import { Product } from './product.entity';
+import { Product } from '../product.entity';
 
 const mockProduct: Product = {
   id: 1,
