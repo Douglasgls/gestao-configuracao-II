@@ -65,6 +65,54 @@ A seguir estão as rotas disponíveis na aplicação:
 
 ---
 
+## Configuração de SSH para o Ansible
+
+Este projeto usa Ansible para provisionar o servidor remoto.
+Abaixo estão as configurações necessárias tanto no cliente (seu PC) quanto no servidor.
+
+. Configuração no CLIENTE (seu PC)
+✔ Gerar chave SSH (opcional, caso ainda não tenha)
+```bash
+ssh-keygen -t ed25519 -C "seu_email"
+```
+
+Gera:
+
+**~/.ssh/id_ed25519** (chave privada)
+
+**~/.ssh/id_ed25519.pub** (chave pública)
+
+✔ Instalar o sshpass (necessário para Ansible usando senha)
+```bash
+sudo apt install sshpass
+```
+
+Sem ele o Ansible dava o erro:
+```bash
+to use the 'ssh' connection type with passwords... install sshpass
+```
+
+✔ Copiar a chave publica para o servidor
+```bash
+ssh-copy-id -i douglaspaz@192.168.0.158
+```
+
+✔ Testar a conexão SSH manualmente
+```bash
+ssh douglaspaz@192.168.0.158
+```
+
+🔄 4. Testar o acesso via Ansible
+```bash
+ansible servers -i ansible/inventario.ini -m ping
+```
+
+Resultado esperado:
+```bash
+192.168.0.158 | SUCCESS => {
+    "ping": "pong"
+}
+```
 ## WorkFlow GitFlow
 
 Escolhi o GitFlow como minha estratégia de desenvolvimento, pois ele me ajudou a manter um fluxo de trabalho mais organizado e colaborativo. Essa estrategia me pareceu a mais robusta e eficiente quando usada em um projeto grande com muitos desenvolvedores, evitando desorganização e mantendo um fluxo consistente.

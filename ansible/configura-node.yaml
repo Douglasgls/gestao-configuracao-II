@@ -1,0 +1,62 @@
+---
+- name: Instalar e configurar aplicação Node/Nest
+  hosts: servers
+  become: yes
+
+  tasks:
+    - name: Atualizar pacotes
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Instalar dependências para NodeSource
+      apt:
+        name: [ "curl" ]
+        state: present
+
+    - name: Adicionar repositório NodeSource (Node 20)
+      shell: curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+
+    - name: Instalar Node.js
+      apt:
+        name: nodejs
+        state: present
+
+    - name: Criar diretório da aplicação
+      file:
+        path: /var/www/minha-api
+        state: directory
+        owner: douglaspaz
+        group: douglaspaz
+        mode: 0755
+      become: yes
+
+    - name: Copiar arquivos da aplicação
+      synchronize:
+        src: "{{ playbook_dir }}/.."
+        dest: "/var/www/minha-api/"
+        rsync_opts:
+          - "--exclude=node_modules"
+          - "--exclude=.git"
+          - "--exclude=ansible"
+      become: no
+
+    - name: Instalar dependências npm
+      command: npm install
+      args:
+        chdir: /var/www/minha-api
+
+    - name: Gerar build da aplicação
+      command: npm run build
+      args:
+        chdir: /var/www/minha-api
+
+    - name: Instalar pm2 globalmente
+      npm:
+        name: pm2
+        global: yes
+
+    - name: Iniciar aplicação com pm2
+      command: pm2 start dist/main.js --name minha-api
+      args:
+        chdir: /var/www/minha-api
