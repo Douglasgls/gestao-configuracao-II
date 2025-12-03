@@ -1,6 +1,12 @@
 ## Status
 ![CI](https://badgen.net/github/checks/douglasgls/gestao-configuracao-II/main)
 ![activity](https://badgen.net/github/last-commit/douglasgls/gestao-configuracao-II)
+
+
+## Docker Hub
+
+https://hub.docker.com/r/douglasdocker955/nest-api
+
 # Projeto da Disciplina de Gestão de Configuração II
 
 Este é o projeto desenvolvido para a disciplina de Gestão de Configuração II, ministrada pelo professor Luis Eduardo. A aplicação foi construída utilizando o framework **NestJS**.
